@@ -2,11 +2,10 @@ init :- length(Board,42), assert(board(Board)), play('player1').
 
 
 
-
 %	'?' represents empty, 'x' represents player1, 'o' represents player2
 %	functions for displaying the board
 printVal(N) :- board(B), nth0(N,B,Val), var(Val), write(' ? '), !. 
-printVal(N) :- board(B), nth0(N,B,Val), write(' '+Val+' ').
+printVal(N) :- board(B), nth0(N,B,Val), write(' '), write(Val), write(' ').
 myWrite(X) :- 
 	(X mod 7) =:= 6, printVal(X), writeln('');
 	printVal(X).
@@ -16,7 +15,11 @@ displayBoard :- writeln('****************'),
 				writeln('****************').
 
 
-available(Elem) :- Elem == '?'.
+%
+descend(Move, Board, FinalMove) :- Move > 41, FinalMove is Move-7,!.
+descend(Move, Board, FinalMove) :- nth0(Move, Board, Elem), not(var(Elem)), FinalMove is Move-7,!.
+descend(Move, Board, FinalMove) :- NewMove is Move+7, descend(NewMove, Board, FinalMove).
+
 
 % AI need to be done after,  _ represents Player
 ia(Board, Index) :-
@@ -55,11 +58,18 @@ play(Player) :- write('New turn for: '), writeln(Player),
 				board(Board),
 				displayBoard,
 				turn(Player, Board, Move),
-				playMove(Board, Move, NewBoard, Player),
+				descend(Move, Board, FinalMove),
+				playMove(Board, FinalMove, NewBoard, Player),
 				applyIt(Board, NewBoard),
 				changePlayer(Player, NextPlayer),
 				play(NextPlayer).
 
+
+
+
+
+
+						
 
 
 
