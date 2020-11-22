@@ -1,6 +1,8 @@
+:- include(winner).
+
 init :- length(Board,42), assert(board(Board)), play('player1').
 
-
+% ['C:\\Users\\18740\\OneDrive\\document\\4IF-Flagship\\Approche logique de l\'intelligence artificielle\\projet\\prolog_puissance4\\main.pl'].
 
 %	'?' represents empty, 'x' represents player1, 'o' represents player2
 %	functions for displaying the board
@@ -43,8 +45,8 @@ turn(Player, Board, Move) :- Player == 'player1', player(Board, Move);
 changePlayer('player1','player2').
 changePlayer('player2','player1').
 
-getPlayer('player1', 'x').
-getPlayer('player2', 'o').
+getPlayer('player1', x).
+getPlayer('player2', o).
 
 
 %
@@ -61,6 +63,9 @@ play(Player) :- write('New turn for: '), writeln(Player),
 				descend(Move, Board, FinalMove),
 				playMove(Board, FinalMove, NewBoard, Player),
 				applyIt(Board, NewBoard),
+				getPlayer(Player, Piece),
+				not(winner(NewBoard, Piece)),
+				
 				changePlayer(Player, NextPlayer),
 				play(NextPlayer).
 
