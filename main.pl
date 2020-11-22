@@ -45,9 +45,12 @@ turn(Player, Board, Move) :- Player == 'player1', player(Board, Move);
 changePlayer('player1','player2').
 changePlayer('player2','player1').
 
-getPlayer('player1', x).
-getPlayer('player2', o).
+getPlayer('player1', 'x').
+getPlayer('player2', 'o').
 
+
+full(X) :- board(B), nth0(X,B,Val), nonvar(Val).
+isFull(Board) :- foreach(between(0,41,X),full(X)).
 
 %
 playMove(Board, Move, NewBoard, Player) :-
@@ -65,10 +68,22 @@ play(Player) :- write('New turn for: '), writeln(Player),
 				applyIt(Board, NewBoard),
 				getPlayer(Player, Piece),
 				not(winner(NewBoard, Piece)),
-				
+				not(isFull(NewBoard)),
 				changePlayer(Player, NextPlayer),
 				play(NextPlayer).
 
+play(Player) :- board(Board), 
+				getPlayer(Player, Piece),
+				winner(Board, Piece),
+				displayBoard,
+				write(Player),write(" wins"),
+				retract(board(Board)).
+
+play(Player) :- board(Board), 
+				isFull(Board),
+				displayBoard,
+				write("game over, nobody wins"),
+				retract(board(Board)).
 
 
 
