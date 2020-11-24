@@ -1,4 +1,5 @@
 :- include(winner).
+:- include(ai_defense).
 
 init :- length(Board,42), assert(board(Board)), play('player1').
 
@@ -28,7 +29,6 @@ ia(Board, Index) :-
 	repeat, Index is random(7), nth0(Index, Board, Elem), var(Elem), !.
 
 
-
 %
 rightNumber(N) :- N =< 6, N >= 0.	
 
@@ -39,7 +39,8 @@ player(Board, Move) :- repeat, write("select a colum from 0 to 6 "), read(Move),
 
 
 turn(Player, Board, Move) :- Player == 'player1', player(Board, Move);
-					   	  	 Player == 'player2', ia(Board, Move).
+							 %Player == 'player2', ia(Board, Move).
+					   	  	 Player == 'player2', indexToMove(Move, Player).
 
 %
 changePlayer('player1','player2').
@@ -67,14 +68,14 @@ play(Player) :- write('New turn for: '), writeln(Player),
 				playMove(Board, FinalMove, NewBoard, Player),
 				applyIt(Board, NewBoard),
 				getPlayer(Player, Piece),
-				not(winner(NewBoard, Piece)),
+				not(win(NewBoard, Piece)),
 				not(isFull(NewBoard)),
 				changePlayer(Player, NextPlayer),
 				play(NextPlayer).
 
 play(Player) :- board(Board), 
 				getPlayer(Player, Piece),
-				winner(Board, Piece),
+				win(Board, Piece),
 				displayBoard,
 				write(Player),write(" wins"),
 				retract(board(Board)).
