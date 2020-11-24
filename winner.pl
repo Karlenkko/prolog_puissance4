@@ -17,7 +17,7 @@ winColDown(Index, Board, Interval, Piece, Number, Result) :- NewIndex is Index+7
 winDiagLeft(Index, Board, Piece, Number, Result) :- Index < 7, Result = Number,!.
 winDiagLeft(Index, Board, Piece, Number, Result) :- (Index mod 7) =:= 0, Result is Number-1, !.
 winDiagLeft(Index, Board, Piece, Number, Result) :- nth0(Index, Board, Val), Val \== Piece, Result is Number-1, !.
-winDiagLeft(Index, Board, Piece, Number, Result) :- Index > 8, NewIndex is Index-8, NewNumber is Number+1, winDiagLeft(NewIndex, Board, Piece, NewNumber, Result).
+winDiagLeft(Index, Board, Piece, Number, Result) :- Index > 7, NewIndex is Index-8, NewNumber is Number+1, winDiagLeft(NewIndex, Board, Piece, NewNumber, Result).
 
 winDiagRight(Index, Board, Piece, Number, Result) :- Index > 33, Result = Number,!.
 winDiagRight(Index, Board, Piece, Number, Result) :- (Index mod 7) =:= 6, Result is Number-1, !.
@@ -25,12 +25,12 @@ winDiagRight(Index, Board, Piece, Number, Result) :- nth0(Index, Board, Val), Va
 winDiagRight(Index, Board, Piece, Number, Result) :- Index < 34, NewIndex is Index+8, NewNumber is Number+1, winDiagRight(NewIndex, Board, Piece, NewNumber, Result).
 
 
-winRDiagLeft(Index, Board, Piece, Number, Result) :- Index >= 36, Result = Number, !.
+winRDiagLeft(Index, Board, Piece, Number, Result) :- Index > 35, Result = Number, !.
 winRDiagLeft(Index, Board, Piece, Number, Result) :- (Index mod 7) =:= 0, Result is Number-1, !.
 winRDiagLeft(Index, Board, Piece, Number, Result) :- nth0(Index, Board, Val), Val \== Piece, Result is Number-1, !.
-winRDiagLeft(Index, Board, Piece, Number, Result) :- Index < 36, NewIndex is Index+6, NewNumber is Number+1, winRDiagLeft(NewIndex, Board, Piece, NewNumber, Result).
+winRDiagLeft(Index, Board, Piece, Number, Result) :- Index < 35, NewIndex is Index+6, NewNumber is Number+1, winRDiagLeft(NewIndex, Board, Piece, NewNumber, Result).
 
-winRDiagRight(Index, Board, Piece, Number, Result) :- Index < 5, Result = Number, !.
+winRDiagRight(Index, Board, Piece, Number, Result) :- Index < 6, Result = Number, !.
 winRDiagRight(Index, Board, Piece, Number, Result) :- (Index mod 7) =:= 6, Result is Number-1, !.
 winRDiagRight(Index, Board, Piece, Number, Result) :- nth0(Index, Board, Val), Val \== Piece, Result is Number-1, !.
 winRDiagRight(Index, Board, Piece, Number, Result) :- Index > 6, NewIndex is Index-6, NewNumber is Number+1, winRDiagRight(NewIndex, Board, Piece, NewNumber, Result).

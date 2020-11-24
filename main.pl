@@ -38,8 +38,8 @@ player(Board, Move) :- repeat, write("select a colum from 0 to 6 "), read(Move),
 				    nth0(Move, Board, Elem), var(Elem),!.
 
 
-turn(Player, Board, Move) :- Player == 'player1', player(Board, Move);
-							 %Player == 'player2', ia(Board, Move).
+turn(Player, Board, Move) :- %Player == 'player1', player(Board, Move);
+							 Player == 'player1', ia(Board, Move);
 					   	  	 Player == 'player2', indexToMove(Move, Player).
 
 %
@@ -69,6 +69,7 @@ play(Player) :- write('New turn for: '), writeln(Player),
 				applyIt(Board, NewBoard),
 				getPlayer(Player, Piece),
 				not(win(NewBoard, Piece)),
+				%not(winner(NewBoard, Piece)),
 				not(isFull(NewBoard)),
 				changePlayer(Player, NextPlayer),
 				play(NextPlayer).
@@ -76,6 +77,7 @@ play(Player) :- write('New turn for: '), writeln(Player),
 play(Player) :- board(Board), 
 				getPlayer(Player, Piece),
 				win(Board, Piece),
+				%winner(Board, Piece),
 				displayBoard,
 				write(Player),write(" wins"),
 				retract(board(Board)).
