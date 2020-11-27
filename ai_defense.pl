@@ -35,13 +35,3 @@ getMovedResult(Index, Player, R1) :- board(Board),
 
 
 
-%
-
-getMovedResults(Index, Player, R1, R2) :- getMovedResult(Index, Player, R1),
-										  changePlayer(Player, Opponent), getMovedResult(Index, Opponent, R2). 
-
-
-moveSimulation(Index, Player, H1, H2) :- Index == 6, getMovedResults(Index, Player, H1, H2),!.
-
-moveSimulation(Index, Player, [H1|MyList], [H2|DefenseList]) :- Index < 6, NewIndex is Index+1, getMovedResults(Index, Player, H1, H2),
-															    moveSimulation(NewIndex, Player, MyList, DefenseList).						
