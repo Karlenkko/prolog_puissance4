@@ -39,8 +39,8 @@ player(Board, Move) :- repeat, write("select a colum from 0 to 6 "), read(Move),
 				    nth0(Move, Board, Elem), var(Elem),!.
 
 
-turn(Player, Board, Move) :- Player == 'player1', player(Board, Move);
-							 %Player == 'player1', ia(Board, Move);
+turn(Player, Board, Move) :- %Player == 'player1', player(Board, Move);
+							 Player == 'player1', ia(Board, Move);
 							 Player == 'player2', indexToMove2(Move, Player).
 					   	  	 %Player == 'player2', indexToMove(Move, Player).
 

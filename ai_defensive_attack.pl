@@ -17,6 +17,7 @@ transformIndexList(List, [H|AvailableIndex], [R|Results]) :-  nth0(H, List, R), 
 
 findMaxFromIndex(MyList, IndexList, MaxIndex) :- transformIndexList(MyList, IndexList, Results), max_list(Results, MaxValue), nth0(IndexMiddle, Results, MaxValue), nth0(IndexMiddle, IndexList, MaxIndex).
 
+
 getMovedResults(Index, Player, R1, R2) :- getMovedResult(Index, Player, R1),
 										  changePlayer(Player, Opponent), getMovedResult(Index, Opponent, R2). 
 

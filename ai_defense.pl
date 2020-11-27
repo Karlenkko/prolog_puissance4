@@ -16,21 +16,33 @@ forAllIndex(Index, B, Piece, [H|ListResult]) :- Index < 41, NewIndex is Index+1,
 getMovedResultsSimple(Index, Player, R2) :- changePlayer(Player, Opponent), getMovedResult(Index, Opponent, R2). 
 										  
 
-moveSimulationSimple(Index, Player, [H2]) :- Index == 6, getMovedResultsSimple(Index, Player, H2),!.
+moveSimulationSimple(Index, Player, [H2|DefenseList]) :- Index < 6, nth0(Index, Board, Elem), nonvar(Elem), H2 = -2, 
+														 NewIndex is Index+1,writeln(NewIndex),writeln(Board),
+														 moveSimulationSimple(NewIndex, Player, DefenseList).
 
-moveSimulationSimple(Index, Player, [H2|DefenseList]) :- Index < 6, NewIndex is Index+1,writeln(NewIndex), getMovedResultsSimple(Index, Player, H2),
+moveSimulationSimple(Index, Player, [H2]) :- Index == 6, nth0(Index, Board, Elem), nonvar(Elem), H2 = -2,!.
+
+moveSimulationSimple(Index, Player, [H2]) :- Index == 6, nth0(Index, Board, Elem), var(Elem), getMovedResultsSimple(Index, Player, H2),!.
+
+moveSimulationSimple(Index, Player, [H2|DefenseList]) :- Index < 6,nth0(Index, Board, Elem), var(Elem), NewIndex is Index+1, writeln(NewIndex),writeln(Board), getMovedResultsSimple(Index, Player, H2),
 														 moveSimulationSimple(NewIndex, Player, DefenseList).						
 
-indexToMove(Index, Player) :- moveSimulationSimple(0, Player, Results), write(Results), max_list(Results, R1), nth0(Index, Results, R1).
+indexToMove(Index, Player) :- moveSimulationSimple(0, Player, Results), write(Results), max_list(Results, R1), nth0(Index, Results, R1), writeln(Index).
 
 % 
 
 getMovedResult(Index, Player, R1) :- board(Board),
+									 nth0(Index, Board, Elem), var(Elem),
 									 descend(Index, Board, FinalMove),
 									 playMove(Board, FinalMove, NewBoard, Player),
 									 getPlayer(Player, Piece),
 									 forAllIndex(0, NewBoard, Piece, Results),
 									 max_list(Results, R1).
+
+
+getMovedResult(Index, Player, R1) :- board(Board),
+									 nth0(Index, Board, Elem), nonvar(Elem),
+									 R1 = -2.
 
 
 
