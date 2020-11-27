@@ -45,10 +45,10 @@ winRDiagRight(Index, Board, Piece, Number, Result) :- Index > 6, NewIndex is Ind
 getRowInterval(Index, Interval) :- X is div(Index, 7), X1 is X*7, X2 is X1+1, X3 is X1+2, X4 is X1+3, X5 is X1+4, X6 is X1+5, X7 is X1+6, Interval = [X1, X2, X3, X4, X5, X6, X7].
 getColInterval(Index, Interval) :- X is (Index mod 7), X1 is X, X2 is X+7, X3 is X+14, X4 is X+21, X5 is X+28, X6 is X+35, Interval = [X1, X2, X3, X4, X5, X6].
 
-winPoint(Index, B, Piece) :- getRowInterval(Index, Interval), winRowLeft(Index, B, Interval, Piece, 1, Result), winRowRight(Index, B, Interval, Piece, Result, FinalResult), FinalResult == 4, !.
-winPoint(Index, B, Piece) :- getColInterval(Index, Interval), winColUp(Index, B, Interval, Piece, 1, Result), winColDown(Index, B, Interval, Piece, Result, FinalResult), FinalResult == 4, !.
-winPoint(Index, B, Piece) :- winDiagLeft(Index, B, Piece, 1, Result), winDiagRight(Index, B, Piece, Result, FinalResult), FinalResult == 4, !.
-winPoint(Index, B, Piece) :- winRDiagLeft(Index, B, Piece, 1, Result), winRDiagRight(Index, B, Piece, Result, FinalResult), FinalResult == 4, !.
+winPoint(Index, B, Piece) :- getRowInterval(Index, Interval), winRowLeft(Index, B, Interval, Piece, 1, Result), winRowRight(Index, B, Interval, Piece, Result, FinalResult), FinalResult >= 4, !.
+winPoint(Index, B, Piece) :- getColInterval(Index, Interval), winColUp(Index, B, Interval, Piece, 1, Result), winColDown(Index, B, Interval, Piece, Result, FinalResult), FinalResult >= 4, !.
+winPoint(Index, B, Piece) :- winDiagLeft(Index, B, Piece, 1, Result), winDiagRight(Index, B, Piece, Result, FinalResult), FinalResult >= 4, !.
+winPoint(Index, B, Piece) :- winRDiagLeft(Index, B, Piece, 1, Result), winRDiagRight(Index, B, Piece, Result, FinalResult), FinalResult >= 4, !.
 
 
 
