@@ -28,7 +28,7 @@ moveSimulation(Index, Player, [H1|MyList], [H2|DefenseList]) :- Index < 6, NewIn
 															    moveSimulation(NewIndex, Player, MyList, DefenseList).	
 
 findMove(MyList, DefenseList, Index) :- max_list(MyList, MyResult),	
-							            MyResult == 4, nth0(Index, MyList, MyResult),!.
+							            MyResult >= 4, nth0(Index, MyList, MyResult),!.
 
 findMove(MyList, DefenseList, Index) :- max_list(DefenseList, DefenseResult),	
 							   			containNumber(DefenseList, DefenseResult, N), N == 1, nth0(Index, DefenseList, DefenseResult),!.
