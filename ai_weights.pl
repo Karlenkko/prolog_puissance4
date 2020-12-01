@@ -1,4 +1,4 @@
-indexToMove4(Index, Player) :- moveSimulation2(0, Player, MyList, DefenseList), writeln(MyList), writeln(DefenseList),
+indexToMove4(Index, Player) :- moveSimulation2(0, Player, MyList, DefenseList),
 							   weights(Weights, 0), transformToWeights(MyList, Weights, Results), findMove(Results, DefenseList, Index),!.
 
 

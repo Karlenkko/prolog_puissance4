@@ -27,7 +27,7 @@ moveSimulation2(Index, Player, [H1|MyList], [H2|DefenseList]) :- Index < 6, NewI
 															    moveSimulation2(NewIndex, Player, MyList, DefenseList).	
 
 
-indexToMove3(Index, Player) :- moveSimulation2(0, Player, MyList, DefenseList), writeln(MyList), writeln(DefenseList), findMove(MyList, DefenseList, Index),!.
+indexToMove3(Index, Player) :- moveSimulation2(0, Player, MyList, DefenseList), findMove(MyList, DefenseList, Index),!.
 
 
 

@@ -20,7 +20,7 @@ moveSimulationSimple(Index, Player, [H2]) :- Index == 6, getMovedResultsSimple(I
 moveSimulationSimple(Index, Player, [H2|DefenseList]) :- Index < 6, NewIndex is Index+1, getMovedResultsSimple(Index, Player, H2),
 														 moveSimulationSimple(NewIndex, Player, DefenseList).						
 
-indexToMove(Index, Player) :- moveSimulationSimple(0, Player, Results), write(Results), max_list(Results, R1), nth0(Index, Results, R1), writeln(Index),!.
+indexToMove(Index, Player) :- moveSimulationSimple(0, Player, Results), max_list(Results, R1), nth0(Index, Results, R1), writeln(Index),!.
 
 % 
 

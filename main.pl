@@ -3,8 +3,9 @@
 :- include(ai_defensive_attack).
 :- include(ai_two_steps).
 :- include(ai_weights).
+:- include(random_AI).
 
-init :- length(Board,42), assert(board(Board)), play('player1').
+init :- length(Board,42), assert(board(Board)), play('player1',0).
 
 % ['C:\\Users\\18740\\OneDrive\\document\\4IF-Flagship\\Approche logique de l\'intelligence artificielle\\projet\\prolog_puissance4\\main.pl'].
 
@@ -16,9 +17,9 @@ myWrite(X) :-
 	(X mod 7) =:= 6, printVal(X), writeln('');
 	printVal(X).
 
-displayBoard :- writeln('****************'),
+displayBoard :- writeln('*********************'),
 				foreach(between(0,41,X),myWrite(X)),
-				writeln('****************').
+				writeln('*********************').
 
 
 %
@@ -41,12 +42,15 @@ player(Board, Move) :- repeat, write("select a colum from 0 to 6 "), read(Move),
 				       nth0(Move, Board, Elem), var(Elem),!.
 
 
-turn(Player, Board, Move) :- Player == 'player1', player(Board, Move);
-							 %Player == 'player1', ia(Board, Move);
-							 %Player == 'player1', indexToMove2(Move, Player);
+turn(Player, Board, Move) :- %Player == 'player1', player(Board, Move);
+							 Player == 'player1', ia(Board, Move);
+							 Player == 'player2', indexToMove2(Move, Player).
 					   	  	 %Player == 'player1', indexToMove(Move, Player);
-					   	  	 %Player == 'player2', indexToMove3(Move, Player).
-					   	  	 Player == 'player2', indexToMove4(Move, Player).
+					   	  	 %Player == 'player2', indexToMove3(Move, Player);
+					   	  	 %Player == 'player1', indexToMove4(Move, Player);
+					   	  	 %Player == 'player1', indexToMove5(Move, Player).
+					   	  	 
+
 
 %
 changePlayer('player1','player2').
@@ -66,9 +70,9 @@ playMove(Board, Move, NewBoard, Player) :-
 applyIt(Board, NewBoard) :- retract(board(Board)),assert(board(NewBoard)).
 
 
-play(Player) :- write('New turn for: '), writeln(Player),
+play(Player, X) :- write('New turn for: '), writeln(Player),
 				board(Board),
-				displayBoard,
+				%displayBoard,
 				turn(Player, Board, Move),
 				descend(Move, Board, FinalMove),
 				playMove(Board, FinalMove, NewBoard, Player),
@@ -78,20 +82,23 @@ play(Player) :- write('New turn for: '), writeln(Player),
 				%not(winner(NewBoard, Piece)),
 				not(isFull(NewBoard)),
 				changePlayer(Player, NextPlayer),
-				play(NextPlayer).
+				NewX is X+1,
+				play(NextPlayer, NewX).
 
-play(Player) :- board(Board), 
+play(Player, X) :- board(Board), 
 				getPlayer(Player, Piece),
 				win(Board, Piece),
 				%winner(Board, Piece),
 				displayBoard,
-				write(Player),write(" wins"),
+				writeln(Player),write(" wins"),
+				writeln(X),
 				retract(board(Board)),!.
 
-play(Player) :- board(Board), 
+play(Player, X) :- board(Board), 
 				isFull(Board),
 				displayBoard,
-				write("game over, nobody wins"),
+				writeln("game over, nobody wins"),
+				writeln(X),
 				retract(board(Board)),!.
 
 

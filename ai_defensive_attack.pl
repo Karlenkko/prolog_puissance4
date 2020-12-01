@@ -37,7 +37,7 @@ findMove(MyList, DefenseList, Index) :-	max_list(DefenseList, DefenseResult),
 							   			containNumber(DefenseList, DefenseResult, N), N > 1, allIndex(DefenseList, DefenseList, DefenseResult, IndexList),
 							   			findMaxFromIndex(MyList, IndexList, Index),!.						   			
 
-indexToMove2(Index, Player) :- moveSimulation(0, Player, MyList, DefenseList), writeln(MyList), writeln(DefenseList), findMove(MyList, DefenseList, Index),!.	
+indexToMove2(Index, Player) :- moveSimulation(0, Player, MyList, DefenseList), findMove(MyList, DefenseList, Index),!.	
 
 
 
