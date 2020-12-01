@@ -43,12 +43,12 @@ player(Board, Move) :- repeat, write("select a colum from 0 to 6 "), read(Move),
 
 
 turn(Player, Board, Move) :- %Player == 'player1', player(Board, Move);
-							 Player == 'player1', ia(Board, Move);
-							 Player == 'player2', indexToMove2(Move, Player).
-					   	  	 %Player == 'player1', indexToMove(Move, Player);
-					   	  	 %Player == 'player2', indexToMove3(Move, Player);
-					   	  	 %Player == 'player1', indexToMove4(Move, Player);
-					   	  	 %Player == 'player1', indexToMove5(Move, Player).
+							 %Player == 'player2', ia(Board, Move);
+							 %Player == 'player1', indexToMove(Move, Player);
+							 %Player == 'player1', indexToMove2(Move, Player).
+					   	  	 %Player == 'player1', indexToMove3(Move, Player).
+					   	  	 Player == 'player2', indexToMove4(Move, Player);
+					   	  	 Player == 'player1', indexToMove5(Move, Player).
 					   	  	 
 
 
@@ -90,15 +90,17 @@ play(Player, X) :- board(Board),
 				win(Board, Piece),
 				%winner(Board, Piece),
 				displayBoard,
-				writeln(Player),write(" wins"),
-				writeln(X),
+				writeln(Player),writeln(" wins"),
+				R is div(X,2)+1,
+				writeln(R),
 				retract(board(Board)),!.
 
 play(Player, X) :- board(Board), 
 				isFull(Board),
 				displayBoard,
 				writeln("game over, nobody wins"),
-				writeln(X),
+				R is div(X,2)+1,
+				writeln(R),
 				retract(board(Board)),!.
 
 
